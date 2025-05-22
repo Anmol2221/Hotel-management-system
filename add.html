@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Add Customer - Orion Hotel</title>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      height: 100%;
+      font-family: 'Open Sans', sans-serif;
+      background: url('https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+    }
+    .overlay {
+      background-color: rgba(0, 0, 0, 0.7);
+      min-height: 100vh;
+      padding: 50px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .header {
+      font-size: 2.5rem;
+      font-weight: 600;
+      margin-bottom: 30px;
+    }
+    .form-container {
+      background-color: rgba(255, 255, 255, 0.2);
+      padding: 30px;
+      border-radius: 10px;
+      width: 80%;
+      max-width: 400px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    label {
+      font-size: 1rem;
+    }
+    input {
+      padding: 10px;
+      font-size: 1rem;
+      border-radius: 8px;
+      border: 1px solid white;
+      background-color: rgba(0, 0, 0, 0.2);
+      color: white;
+    }
+    .submit-button {
+      padding: 10px 20px;
+      border-radius: 10px;
+      background-color: rgba(255, 255, 255, 0.4);
+      color: white;
+      font-size: 1.2rem;
+      width: 100%;
+      text-align: center;
+      cursor: pointer;
+      transition: background-color 0.3s, color 0.3s;
+      border: none;
+    }
+    .submit-button:hover {
+      background-color: white;
+      color: black;
+    }
+    .back-button {
+      margin-top: 30px;
+      padding: 10px 20px;
+      border-radius: 10px;
+      text-decoration: none;
+      background-color: rgba(255, 255, 255, 0.3);
+      color: white;
+      font-size: 1.2rem;
+      text-align: center;
+      width: 250px;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    .back-button:hover {
+      background-color: white;
+      color: black;
+    }
+    /* New error message style */
+    .error-message {
+      background-color: rgba(255, 0, 0, 0.15);
+      color: #ffb3b3;
+      padding: 15px 25px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      text-align: center;
+      width: 80%;
+      max-width: 400px;
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay">
+    <div class="header">Add Customer</div>
+    
+    <!-- Error message section -->
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="error-message">
+          {% for message in messages %}
+            {{ message }}
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <form class="form-container" method="post" action="{{ url_for('add_customer') }}">
+      <label for="first_name">Name</label>
+      <input type="text" id="first_name" name="first_name" required>
+
+      <label for="phone">Phone Number</label>
+      <input type="text" id="phone" name="phone" required>
+
+      <label for="date_till">Date of stay till</label>
+      <input type="date" id="date_till" name="date_till" required>
+
+      <button class="submit-button" type="submit">Add Customer</button>
+    </form>
+    <a href="{{ url_for('dashboard') }}" class="back-button">Back</a>
+  </div>
+</body>
+</html>

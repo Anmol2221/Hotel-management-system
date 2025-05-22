@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Register as Customer - Orion Hotel</title>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      height: 100%;
+      font-family: 'Open Sans', sans-serif;
+      background: url('https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+    }
+    .overlay {
+      background-color: rgba(0, 0, 0, 0.7);
+      min-height: 100vh;
+      padding: 50px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .header {
+      font-size: 2.2rem;
+      font-weight: 600;
+      margin-bottom: 30px;
+    }
+    .form-container {
+      background-color: rgba(255, 255, 255, 0.2);
+      padding: 30px;
+      border-radius: 10px;
+      width: 80%;
+      max-width: 400px;
+      display: flex;
+      flex-direction: column;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 18px; /* Nice gap between fields */
+    }
+    label {
+      font-size: 1rem;
+      margin-bottom: 4px; /* Tight label-input gap */
+      font-weight: 600;
+    }
+    input[type="text"],
+    input[type="password"] {
+      padding: 10px;
+      font-size: 1rem;
+      border-radius: 8px;
+      border: 1px solid white;
+      background-color: rgba(0, 0, 0, 0.2);
+      color: white;
+      margin-bottom: 0; /* Remove default gap */
+    }
+    .submit-button {
+      padding: 10px 20px;
+      border-radius: 10px;
+      background-color: rgba(255, 255, 255, 0.4);
+      color: white;
+      font-size: 1.2rem;
+      width: 100%;
+      text-align: center;
+      cursor: pointer;
+      transition: background-color 0.3s, color 0.3s;
+      border: none;
+      margin-bottom: 10px;
+    }
+    .submit-button:hover {
+      background-color: white;
+      color: black;
+    }
+    .login-link {
+      margin-top: 10px;
+      text-align: center;
+    }
+    .login-link a {
+      color: #4FC3F7; /* Bright blue */
+      text-decoration: underline;
+      font-weight: 600;
+      transition: color 0.3s;
+    }
+    .login-link a:hover {
+      color: #0288D1; /* Darker blue on hover */
+    }
+    .back-button {
+      margin-top: 30px;
+      padding: 10px 20px;
+      border-radius: 10px;
+      text-decoration: none;
+      background-color: rgba(255, 255, 255, 0.3);
+      color: white;
+      font-size: 1.2rem;
+      text-align: center;
+      width: 250px;
+      transition: background-color 0.3s, color 0.3s;
+      display: block;
+    }
+    .back-button:hover {
+      background-color: white;
+      color: black;
+    }
+    .error-message {
+      background-color: rgba(255, 0, 0, 0.15);
+      color: #ffb3b3;
+      padding: 15px 25px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      text-align: center;
+      width: 80%;
+      max-width: 400px;
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay">
+    <div class="header">Register as a Customer</div>
+    
+    <!-- Error message section (for Flask/Jinja) -->
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="error-message">
+          {% for message in messages %}
+            {{ message }}
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <form class="form-container" method="post" action="{{ url_for('customer_register') }}">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" required>
+      </div>
+      <div class="form-group">
+        <label for="phone">Phone Number</label>
+        <input type="text" id="phone" name="phone" required>
+      </div>
+      <div class="form-group">
+        <label for="username">Choose a Username</label>
+        <input type="text" id="username" name="username" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Choose a Password</label>
+        <input type="password" id="password" name="password" required>
+      </div>
+      <button class="submit-button" type="submit">Register</button>
+    </form>
+    <div class="login-link">
+      Already have an account? <a href="{{ url_for('customer_login') }}">Login here</a>
+    </div>
+    <a href="{{ url_for('customer_login') }}" class="back-button">Back to Home</a>
+  </div>
+</body>
+</html>

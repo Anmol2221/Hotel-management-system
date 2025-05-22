@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>View Rooms - Orion Hotel</title>
+  <!-- Google Fonts: Open Sans -->
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      height: 100%;
+      font-family: 'Open Sans', sans-serif;
+      background: url('https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+    }
+    .overlay {
+      background-color: rgba(0, 0, 0, 0.7);
+      min-height: 100vh;
+      padding: 50px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .header {
+      font-size: 2.5rem;
+      font-weight: 600;
+      margin-bottom: 30px;
+    }
+    table {
+      width: 80%;
+      border-collapse: collapse;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      border: 1px solid white;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+    th, td {
+      padding: 15px;
+      text-align: center;
+      border-bottom: 1px solid white;
+    }
+    th { font-size: 1.2rem; }
+    .status-available {
+      color: lightgreen;
+      font-weight: bold;
+    }
+    .status-occupied {
+      color: red;
+      font-weight: bold;
+    }
+    tr:hover {
+      background-color: rgba(255,255,255,0.07);
+    }
+    .back-button {
+      margin-top: 30px;
+      padding: 10px 20px;
+      border-radius: 10px;
+      text-decoration: none;
+      background-color: rgba(255, 255, 255, 0.3);
+      color: white;
+      font-size: 1.2rem;
+      text-align: center;
+      width: 250px;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    .back-button:hover {
+      background-color: white;
+      color: black;
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay">
+    <div class="header">View Rooms</div>
+    <table>
+      <thead>
+        <tr>
+          <th scope="col">Room Number</th>
+          <th scope="col">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if rooms %}
+          {% for room in rooms %}
+          <tr>
+            <td>{{ room['room_number'] }}</td>
+            <td class="{% if room['status'] == 'occupied' %}status-occupied{% else %}status-available{% endif %}">
+              {{ room['status'] | capitalize }}
+            </td>
+          </tr>
+          {% endfor %}
+        {% else %}
+          <tr>
+            <td colspan="2" style="padding: 40px; font-size: 1.1rem;">
+              No rooms found in the database.
+            </td>
+          </tr>
+        {% endif %}
+      </tbody>
+    </table>
+    <a href="{{ url_for('dashboard') }}" class="back-button">Back</a>
+  </div>
+</body>
+</html>
