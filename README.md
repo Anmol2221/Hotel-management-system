@@ -28,7 +28,7 @@ The Orion Hotel Management System is a web-based platform designed to streamline
 
 ---
 
-## Current Status
+## Frontend overview
 
 The user interface and navigation have been fully implemented for both admin and customer perspectives. All pages feature modern, responsive CSS and intuitive navigation.
 
@@ -55,17 +55,6 @@ The backend supports:
 - Booking logic and room availability checks
 - Real-time updates to both admin and customer dashboards
 - Secure password storage and session handling
-
----
-
-## Challenges Faced
-
-- **Routing and Backend Integration:**  
-  Ensuring seamless navigation and correct data flow between HTML pages and backend logic was a major challenge, especially as the project expanded to include both admin and customer modules.
-- **Database Design and Integration:**  
-  Designing the database schema and integrating it with Flask to handle room availability, customer data, and booking status required multiple iterations and careful debugging.
-- **Learning HTML and Frontend Development:**  
-  Building modern, responsive pages while learning HTML and CSS from scratch added significant complexity, but greatly improved the project’s appearance and usability.
 
 ---
 
