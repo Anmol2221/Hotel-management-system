@@ -10,8 +10,8 @@ The Orion Hotel Management System is a web-based platform designed to streamline
 - Secure admin login
 - Dashboard for all admin operations
 - Add new customers and bookings
-- View and manage room statuses
-- Remove bookings
+- View room status
+- Manage bookings
 - View customer details
 
 ### Customer Portal
