@@ -1,11 +1,13 @@
 from flask import Flask, render_template, redirect, request, url_for, flash, session
 import sqlite3
+from datetime import date, datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
 app.secret_key = 'your-secret-key-123' 
 
 #Made By Anmol Choudhury
+
 
 # ======================= DATABASE FUNCTIONS =======================
 def init_db():
@@ -109,7 +111,22 @@ def remove_booking(booking_id):
     conn.commit()
     conn.close()
 
-# ======================= AUTHENTICATION ROUTES =======================
+def remove_expired_bookings():
+    today = date.today().isoformat()
+    conn = sqlite3.connect('hotel.db')
+    cursor = conn.cursor()
+    # Find all expired bookings
+    cursor.execute('SELECT id, room_number FROM customers WHERE room_number IS NOT NULL AND date_till < ?', (today,))
+    expired = cursor.fetchall()
+    for booking_id, room_number in expired:
+        # Set room as available
+        cursor.execute('UPDATE rooms SET status = "available" WHERE room_number = ?', (room_number,))
+        # Remove booking from customer
+        cursor.execute('UPDATE customers SET room_number = NULL, date_till = "" WHERE id = ?', (booking_id,))
+    conn.commit()
+    conn.close()
+
+# ======================= CUSTOMER ROUTES =======================
 @app.route('/customer_login', methods=['GET', 'POST'])
 def customer_login():
     if request.method == 'POST':
@@ -148,6 +165,7 @@ def customer_register():
 
 @app.route('/customer_dashboard', methods=['GET', 'POST'])
 def customer_dashboard():
+    remove_expired_bookings()
     customer_id = session.get('customer_id')
     if not customer_id:
         return redirect(url_for('customer_login'))
@@ -166,6 +184,15 @@ def book_room():
     date_till = request.form.get('date_till')
     if not date_till:
         flash('Please select a date.', 'error')
+        return redirect(url_for('customer_dashboard'))
+    # Prevent booking for past dates
+    try:
+        selected_date = datetime.strptime(date_till, '%Y-%m-%d').date()
+        if selected_date < date.today():
+            flash('Cannot book for a past date.', 'error')
+            return redirect(url_for('customer_dashboard'))
+    except ValueError:
+        flash('Invalid date format.', 'error')
         return redirect(url_for('customer_dashboard'))
     if get_customer_booking(customer_id):
         flash('You already have a booking.', 'error')
@@ -201,12 +228,14 @@ def admin_login():
 
 @app.route('/dashboard')
 def dashboard():
+    remove_expired_bookings()
     if not session.get('admin_logged_in'):
         return redirect(url_for('admin_login'))
     return render_template('dashboard.html')
 
 @app.route('/manage_bookings', methods=['GET', 'POST'])
 def manage_bookings():
+    remove_expired_bookings()
     if not session.get('admin_logged_in'):
         return redirect(url_for('admin_login'))
     if request.method == 'POST':
@@ -253,6 +282,7 @@ def add_customer():
 
 @app.route('/view_customer_details')
 def view_customer_details():
+    remove_expired_bookings()
     if not session.get('admin_logged_in'):
         return redirect(url_for('admin_login'))
     bookings = get_all_bookings()
