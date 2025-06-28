@@ -3,7 +3,9 @@ import sqlite3
 from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
-app.secret_key = 'your-secret-key-123'  # Replace with a real secret key
+app.secret_key = 'your-secret-key-123' 
+
+#Made By Anmol Choudhury
 
 # ======================= DATABASE FUNCTIONS =======================
 def init_db():
