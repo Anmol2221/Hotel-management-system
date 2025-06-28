@@ -1,5 +1,7 @@
 # Orion Hotel Management System
 
+**Made by:** Anmol Choudhury
+
 The Orion Hotel Management System is a web-based platform designed to streamline hotel room management, customer bookings, and administrative tasks for both hotel staff and guests. The system provides an intuitive interface for administrators to manage room availability and customer data, while also allowing customers to register, log in, view their bookings, and make reservations online. This integrated approach ensures efficient, user-friendly management of hotel operations and guest experiences.
 
 ---
