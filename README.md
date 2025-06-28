@@ -68,6 +68,8 @@ The backend supports:
 1. Clone or download this repository.
 2. (Optional) Create and activate a virtual environment:
 
+---
+
 
 
 **Made by:** Anmol Choudhury
